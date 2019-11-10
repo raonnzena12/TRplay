@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+	<resultMap type="member" id="memberVo">
+		<id property="memNo" column="MEM_NO"/>
+		<result property="memId" column="MEM_ID" />
+		<result property="memPw" column="MEM_PW" />
+		<result property="memEmail" column="MEM_EMAIL" />
+		<result property="memPcode" column="MEM_PCODE" />
+	</resultMap>
+	
+	<!-- 멤버 로그인하는 쿼리 -->
+	<select id="memberLogin" parameterType="member" resultMap="memberVo">
+		SELECT * 
+		FROM MEMBER_TB
+		WHERE MEM_ID = #{ memId }
+		AND MEM_PW = #{ memPw }
+	</select>
+	
+	<!-- 멤버 아이디 사용유무 확인하는 쿼리 -->
+	<select id="memberIdCheck" parameterType="member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER_TB
+		WHERE MEM_ID = #{ memId }
+	</select>
+
+	<!-- 유저 인포용 유저정보 로드하는 쿼리 -->
+	<select id="selectMemberInfo" parameterType="member" resultMap="memberVo">
+		SELECT 
+			MEM_ID,
+			MEM_EMAIL
+		FROM MEMBER_TB
+		WHERE MEM_ID = #{ memId }
+	</select>
+</mapper>
