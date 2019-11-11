@@ -53,15 +53,28 @@ public class MemberController {
 	@RequestMapping("/{userId}/userPage.tr")
 	public String memberPage(@PathParam("userId")String userId, HttpSession session, Model model) throws Exception {
 		Object loginUser = session.getAttribute("loginUser");
-		if ( loginUser == null ) return "redirect:login.tr";
+		if ( loginUser == null ) return "redirect:/login.tr";
+		if ( ((Member)loginUser).getMemId().equals(userId) ) {
+			model.addAttribute("myPage", true);
+		} 
+		Member uInfo = new Member();
+		uInfo.setMemId(userId);
+		model.addAttribute("userInfo", memService.selectMemberInfo(uInfo));
+		
+		return "member/memberMypageHeader";
+	}
+	
+	@RequestMapping("/{userId}/editProfile.tr")
+	public String memberProfileEditView(@PathParam("userId") String userId, HttpSession session, Model model) throws Exception {
+		Object loginUser = session.getAttribute("loginUser");
+		if ( loginUser == null ) return "redirect:/login.tr";
 		if ( ((Member)loginUser).getMemId().equals(userId) ) {
 			model.addAttribute("myPage", "myPage");
 		} 
 		Member uInfo = new Member();
 		uInfo.setMemId(userId);
 		model.addAttribute("userInfo", memService.selectMemberInfo(uInfo));
-		
-		return "member/memberMypage";
+		return "member/memberEditProfile";
 	}
 
 }

@@ -9,7 +9,7 @@
   width: 150px;
 }
 </style>
-<link rel="stylesheet" href="resources/css/bootstrap.minty.min.css">
+<link rel="stylesheet" href="/trpg/resources/css/bootstrap.minty.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
@@ -50,7 +50,7 @@
             <button type="button" class="btn btn-outline-success" id="loginBtn">LOG IN</button>
             </c:when>
             <c:otherwise>
-            <button type="button" class="btn btn-outline-success">MY PAGE</button>
+            <button type="button" class="btn btn-outline-success" id="myPageBtn">MY PAGE</button>
             </c:otherwise>
           </c:choose>
         </form>
@@ -70,6 +70,11 @@ $(function(){
       fn_loginUser(uId, uPw);
     }
   });
+
+  /* 마이페이지로 이동하는 코드 */
+  $("#myPageBtn").on("click", function(){
+    location.href = '/trpg/${ loginUser.memId }/userPage.tr';
+  }); 
 });
 
 /* 로그인 하는 펑션 */
